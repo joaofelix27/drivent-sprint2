@@ -16,6 +16,10 @@ async function getTickets(userId: number) {
   });
 }
 
+async function getTicketsTypes() {
+  return prisma.ticketType.findMany();
+}
+
 // async function getTickets(userIde: number) {
 //   return prisma.ticket.findMany({
 //     include: {
@@ -31,6 +35,7 @@ async function getTickets(userId: number) {
 
 const ticketsRepository = {
   getTickets,
+  getTicketsTypes
 };
 
 export default ticketsRepository;

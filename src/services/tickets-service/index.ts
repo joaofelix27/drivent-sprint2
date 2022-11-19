@@ -8,6 +8,13 @@ async function getTickets(userId: number) {
   return tickets?.Ticket[0];
 }
 
-const ticketsService = { getTickets };
+async function getTicketsTypes() {
+  const tickets = await ticketsRepository.getTicketsTypes();
+  if (!tickets) throw notFoundError();
+
+  return tickets;
+}
+
+const ticketsService = { getTickets, getTicketsTypes };
 
 export default ticketsService;
