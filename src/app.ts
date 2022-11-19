@@ -17,9 +17,9 @@ app
   .get("/health", (_req, res) => res.send("OK!"))
   .use("/users", usersRouter)
   .use("/auth", authenticationRouter)
-  .use("/tickets", ticketsRouter)
   .use("/event", eventsRouter)
   .use("/enrollments", enrollmentsRouter)
+  .use("/tickets", ticketsRouter)
   .use(handleApplicationErrors);
 
 export function init(): Promise<Express> {
