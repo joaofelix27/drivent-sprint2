@@ -1,8 +1,17 @@
 import { notFoundError, unauthorizedError } from "@/errors";
 import ticketsRepository from "@/repositories/tickets-repository";
 import paymentsRepository from "@/repositories/payments-repository";
+import { Payment } from "@prisma/client";
 
-async function getPayments(ticketId: number, userId: number) {
+async function getPayments(ticketId: number, userId: number): Promise<Payment> {
+  await checkTicket(ticketId, userId);
+
+  const payment = await paymentsRepository.getPaymentsById(ticketId);
+
+  return payment[0];
+}
+
+async function checkTicket(ticketId: number, userId: number): Promise<void> {
   const ticket = await ticketsRepository.getTicketsById(ticketId);
   if (!ticket) throw notFoundError();
 
@@ -11,24 +20,14 @@ async function getPayments(ticketId: number, userId: number) {
   if (ticketUserId!==userId) {
     throw unauthorizedError();
   }
-
-  const payment = await paymentsRepository.getPaymentsById(ticketId);
-
-  return payment[0];
 }
 
-// async function createTicket(ticketTypeId: number, userId: number) {
-//   const enrollmentExists = await enrollmentRepository.findByUserId(userId);
+async function createPayment(ticketId: number, userId: number) {
+  await checkTicket(ticketId, userId);
 
-//   if (!enrollmentExists) throw notFoundError();
+  return "teste";
+}
 
-//   await paymentsRepository.createTicket(ticketTypeId, enrollmentExists?.id );
-
-//   return getTickets(userId);
-
-//   // Only works if there is only one ticket from an user
-// }
-
-const paymentsService = { getPayments };
+const paymentsService = { getPayments, createPayment };
 
 export default paymentsService;
