@@ -1,22 +1,17 @@
 import { prisma } from "@/config";
 
 async function getPaymentsById(ticketId: number) {
-  return prisma.enrollment.findUnique({
-    where: {
-      userId: 1
-    }, include: {
-      Ticket: {
-        include: {
-          TicketType: true
-        }
-      },
+  return prisma.payment.findMany(
+    {
+      where: {
+        ticketId
+      }
     }
-   
-  });
+  );
 }
 
-const ticketsRepository = {
+const paymentsRepository = {
   getPaymentsById,
 };
   
-export default ticketsRepository;
+export default paymentsRepository;

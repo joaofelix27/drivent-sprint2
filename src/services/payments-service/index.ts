@@ -1,5 +1,6 @@
 import { notFoundError, unauthorizedError } from "@/errors";
 import ticketsRepository from "@/repositories/tickets-repository";
+import paymentsRepository from "@/repositories/payments-repository";
 
 async function getPayments(ticketId: number, userId: number) {
   const ticket = await ticketsRepository.getTicketsById(ticketId);
@@ -11,7 +12,9 @@ async function getPayments(ticketId: number, userId: number) {
     throw unauthorizedError();
   }
 
-  return ticket;
+  const payment = await paymentsRepository.getPaymentsById(ticketId);
+
+  return payment[0];
 }
 
 // async function createTicket(ticketTypeId: number, userId: number) {
