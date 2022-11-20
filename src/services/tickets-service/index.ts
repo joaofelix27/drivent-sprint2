@@ -1,4 +1,5 @@
 import { notFoundError } from "@/errors";
+import { EnrollmentWithTicketsAndType } from "@/protocols";
 import enrollmentRepository from "@/repositories/enrollment-repository";
 import ticketsRepository from "@/repositories/tickets-repository";
 

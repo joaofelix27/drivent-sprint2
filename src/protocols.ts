@@ -1,3 +1,5 @@
+import { Ticket, TicketType, Enrollment } from "@prisma/client";
+
 export type ApplicationError = {
   name: string;
   message: string;
@@ -61,4 +63,10 @@ export type TicketWithEnrollment = {
   }
     createdAt: Date;
     updatedAt: Date;
+}
+
+export type EnrollmentWithTicketsAndType =  Enrollment & {
+  Ticket: (Ticket & {
+      TicketType: TicketType;
+  })[];
 }
